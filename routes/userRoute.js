@@ -23,14 +23,11 @@ router.post("/register", (req, res) => {
   try {
     let sql = "INSERT INTO users SET ?";
     const {
-      full_name,
       email,
       password,
-      user_type,
+      full_name,
       phone,
-      country,
-      billing_address,
-      default_shipping_address,
+      user_type
     } = req.body;
 
     // The start of hashing / encryption
@@ -38,15 +35,13 @@ router.post("/register", (req, res) => {
     const hash = bcrypt.hashSync(password, salt);
     
     let user = {
-      full_name,
       email,
+      password: hash,
+      full_name,
       // We sending the hash value to be stored witin the table
-      hash,
-      user_type,
       phone,
-      country,
-      billing_address,
-      default_shipping_address,
+      user_type,
+      
     };
     con.query(sql, user, (err, result) => {
       if (err) throw err;

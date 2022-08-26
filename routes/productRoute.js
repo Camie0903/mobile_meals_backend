@@ -16,10 +16,10 @@ router.get("/", (req, res) => {
     }
 });
 
-router.get("/:product_id", (req, res) => {
+router.get("/:id", (req, res) => {
   try {
     con.query(
-      `SELECT * FROM products WHERE product_product_id = ${req.params.product_id}`,
+      `SELECT * FROM products WHERE id = "${req.params.id}"`,
       (err, result) => {
         if (err) throw err;
         res.send(result);
@@ -53,7 +53,7 @@ router.post("/", middleware, (req, res) => {
 
 
 
-router.patch("/:product_id", (req, res) => {
+router.patch("/:id", (req, res) => {
     const {
         image,
         title,
@@ -62,7 +62,7 @@ router.patch("/:product_id", (req, res) => {
         } = req.body;
     try {
       con.query(
-        `update product set image = "${image}", title = "${title}", price = "${price}", category = "${category}" where product = "${req.params.product_id}"`,
+        `update product set image = "${image}", title = "${title}", price = "${price}", category = "${category}" where id ="${req.params.id}"`,
         (err, result) => {
           if (err) throw err;
           res.send(result);
@@ -74,10 +74,10 @@ router.patch("/:product_id", (req, res) => {
     }
   });
 
-router.delete("/:product_id", (req, res) => {
+router.delete("/:id", (req, res) => {
     try {
       con.query(
-        `delete from product where product_id = ${req.params.product_id}`,
+        `delete from product where id ="${req.params.id}"`,
         (err, result) => {
           if (err) throw err;
           res.send(result);

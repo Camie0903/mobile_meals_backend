@@ -51,7 +51,22 @@ router.post("/", middleware, (req, res) => {
  
 });
 
-
+router.put("/:id", (req, res) => {
+  const { title, price, image, category} = req.body;
+  try {
+    con.query(
+      `UPDATE Product SET title='${title}', price='${price}', image ='${image}', category='${category}',
+       WHERE id ='${req.params.id}'`,
+      (err, result) => {
+        if (err) throw err;
+        res.send(result);
+      }
+    );
+  } catch (error) {
+    console.log(error);
+    res.status(400).send(error);
+  }
+});
 
 router.patch("/:id", (req, res) => {
     const {
